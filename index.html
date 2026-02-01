@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Paupau ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --pink-dark: #ff4d6d; --pink-main: #ff758f; --bg-soft: #fff0f3; }
+        body { font-family: 'Quicksand', sans-serif; background: var(--bg-soft); margin: 0; overflow: hidden; }
+        .font-love { font-family: 'Dancing Script', cursive; }
+
+        /* Animation de fond permanente */
+        .bg-decor { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        .heart { position: absolute; color: var(--pink-main); opacity: 0.5; animation: fall linear infinite; }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ENVELOPPE 3D SCELLÉE */
+        .env-wrapper { position: relative; width: 340px; height: 220px; cursor: pointer; z-index: 10; margin-top: 20px; }
+        .envelope { 
+            position: relative; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--pink-dark); 
+            border-radius: 8px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden; /* EMPECHE LE TEXTE DE DEPASSER */
+        }
+        
+        .envelope .top { position: absolute; top: 0; left: 0; border-left: 170px solid transparent; border-right: 170px solid transparent; border-top: 120px solid #ff85a1; transform-origin: top; transition: transform 0.6s; z-index: 5; }
+        .envelope.open { overflow: visible; } /* Permet à la lettre de sortir quand on ouvre */
+        .envelope.open .top { transform: rotateX(180deg); z-index: 1; }
+
+        .envelope .front { position: absolute; bottom: 0; left: 0; border-left: 170px solid transparent; border-right: 170px solid transparent; border-bottom: 115px solid var(--pink-dark); z-index: 4; }
+        .envelope .sides { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: #ff5c7a; z-index: 3; border-radius: 8px; clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%); }
+
+        /* LA LETTRE - Reculée pour être cachée */
+        .letter { position: absolute; bottom: -20px; left: 10px; width: 320px; height: 160px; background: white; z-index: 2; transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 20px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.05); }
+        .envelope.open .letter { transform: translateY(-240px); z-index: 6; height: 350px; width: 340px; left: 0; }
+        .letter-text { font-weight: 900; font-size: 1.4rem; color: #2d3436; margin: 15px 0; }
+
+        /* PHOTO HD */
+        .polaroid { background: white; padding: 15px 15px 60px 15px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); transform: rotate(-2deg); max-width: 350px; width: 90%; }
+        .polaroid img { width: 100%; height: auto; image-rendering: auto; border: 1px solid #f8f8f8; }
+
+        .step { display: none; opacity: 0; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100%; position: relative; z-index: 1; }
+        .step.active { display: flex; opacity: 1; transition: opacity 0.5s; }
+
+        .btn-premium { background: var(--pink-dark); color: white; padding: 18px 45px; border-radius: 50px; font-weight: bold; font-size: 1.3rem; border: none; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-decor" id="bg"></div>
+
+    <section id="step1" class="step active">
+        <h1 class="font-love text-5xl text-pink-600 mb-10 text-center px-4">Un message pour ma Paupau...</h1>
+        <div class="env-wrapper" onclick="openEnv()">
+            <div class="envelope" id="envelope">
+                <div class="top"></div>
+                <div class="sides"></div>
+                <div class="front"></div>
+                <div class="letter">
+                    <p class="font-love text-3xl text-pink-500">Ma Paupau,</p>
+                    <p class="letter-text">
+                        Merci ma paupau de partager ma vie depuis plus de 7 mois je t'aime plus que tout. ❤️
+                    </p>
+                    <p class="font-love text-3xl text-pink-600">- Max -</p>
+                    <button onclick="changeStep(2, event)" class="mt-6 bg-pink-600 text-white px-8 py-3 rounded-full font-bold uppercase text-sm">Découvrir la suite →</button>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px;"></div> <p class="text-pink-500 font-bold animate-bounce uppercase tracking-widest text-sm">Ouvre la lettre 💌</p>
+    </section>
+
+    <section id="step2" class="step">
+        <h2 class="font-love text-5xl text-pink-600 mb-8">Nos 7 mois... ✨</h2>
+        <div class="polaroid">
+            <img src="https://i.ibb.co/FbQmrWfp/image.jpg" alt="Photo de nous">
+            <p class="font-love text-3xl text-center mt-6 text-gray-800">Je t'aime ❤️</p>
+        </div>
+        <button onclick="changeStep(3)" class="mt-12 btn-premium">Une dernière chose...</button>
+    </section>
+
+    <section id="step3" class="step">
+        <img src="https://media.tenor.com/7d_T9p4Ym3QAAAAM/cats-kissing.gif" class="w-64 rounded-2xl mb-8 shadow-2xl">
+        <h2 class="font-love text-5xl text-pink-600 mb-12 text-center px-6">Paupau, veux-tu être ma Valentine ? ❤️</h2>
+        <div class="flex flex-col md:flex-row items-center gap-10 justify-center w-full">
+            <button id="yesBtn" class="btn-premium px-20 py-10 text-4xl">OUI !</button>
+            <button id="noBtn" class="bg-gray-400 text-white px-10 py-4 rounded-full font-bold">Non</button>
+        </div>
+    </section>
+
+    <script>
+        const bg = document.getElementById('bg');
+        const icons = ['❤️', '💖', '🌸', '✨'];
+        for(let i=0; i<50; i++) {
+            const div = document.createElement('div');
+            div.className = 'heart';
+            div.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            div.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            div.style.animationDelay = Math.random() * 5 + 's';
+            bg.appendChild(div);
+        }
+
+        function openEnv() { document.getElementById('envelope').classList.add('open'); }
+        
+        function changeStep(s, e) {
+            if(e) e.stopPropagation();
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + s).classList.add('active');
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        const escape = (e) => {
+            e.preventDefault();
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
+            const size = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (size + 5) + 'px';
+        };
+
+        noBtn.addEventListener('mouseover', escape);
+        noBtn.addEventListener('touchstart', escape);
+
+        yesBtn.addEventListener('click', () => {
+            document.body.innerHTML = `
+                <div class="flex flex-col items-center justify-center min-h-screen text-center bg-pink-100 p-4">
+                    <img src="https://media.tenor.com/9796Y8_Y_6QAAAAM/cat-kiss.gif" class="w-80 rounded-3xl shadow-2xl mb-10">
+                    <h1 class="font-love text-7xl text-pink-600 animate-bounce">OUI ! ❤️</h1>
+                    <p class="font-love text-4xl text-pink-500 mt-6">Je t'aime à l'infini Paupau !</p>
+                    <p class="mt-4 text-gray-500 font-bold">- Ton Max pour toujours -</p>
+                </div>`;
+        });
+    </script>
+</body>
+</html>
